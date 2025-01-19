@@ -5,19 +5,28 @@ import "./styles/global.scss";
 
 export default function App() {
   const [aladdin, setAladdin] = useState(lamp);
+  const [clickCount, setClickCount] = useState(0);
 
   const changeImage = () => {
-    setAladdin(genie);
+    
+
+    const imgElement = document.querySelector("img");
+    imgElement.classList.add("fade");
+    setTimeout(() => {
+      imgElement.classList.remove("fade");
+      if (clickCount < 6) {
+        setAladdin((prev) => (prev === lamp ? genie : lamp));
+        setClickCount((prev) => prev + 1);
+      };
+    }, 1000)
   };
 
   return (
     <main>
-      <h1>
-        &ldquo;Liberte a magia da programação com a lâmpada de Aladdin.&rdquo;
-      </h1>
+      <h1>Liberte a magia da programação com lâmpada de Aladdin.</h1>
       <img src={aladdin} alt="Image lamp magic" />
 
-      <button onClick={changeImage}>Clique aqui</button>
+      <button onClick={changeImage}>{clickCount >= 6 ? "Limite atingido" : "Clique aqui"}</button>
     </main>
   );
 }
